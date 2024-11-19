@@ -1,4 +1,4 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
+--if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
 
 -- AstroCore provides a central place to modify mappings, vim options, autocommands, and more!
 -- Configuration documentation can be found with `:h astrocore`
@@ -58,6 +58,37 @@ return {
             )
           end,
           desc = "Close buffer from tabline",
+        },
+
+        -- mappings for package-info
+        ["<Leader>m"] = { desc = "package-info" },
+        ["<Leader>ms"] = {
+          function() require("package-info").show { silent = true, noremap = true } end,
+          desc = "Show dependency versions",
+        },
+        ["<Leader>mc"] = {
+          function() require("package-info").hide { silent = true, noremap = true } end,
+          desc = "Hide dependency versions",
+        },
+        ["<Leader>mt"] = {
+          function() require("package-info").toggle { silent = true, noremap = true } end,
+          desc = "Toggle dependency versions",
+        },
+        ["<Leader>mu"] = {
+          function() require("package-info").update { silent = true, noremap = true } end,
+          desc = "Update dependency on the line",
+        },
+        ["<Leader>md"] = {
+          function() require("package-info").delete { silent = true, noremap = true } end,
+          desc = "Delete dependency on the line",
+        },
+        ["<Leader>mi"] = {
+          function() require("package-info").install { silent = true, noremap = true } end,
+          desc = "Install a new dependency",
+        },
+        ["<Leader>mp"] = {
+          function() require("package-info").change_version { silent = true, noremap = true } end,
+          desc = "Install a different dependency version",
         },
 
         -- tables with just a `desc` key will be registered with which-key if it's installed
