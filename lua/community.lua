@@ -11,6 +11,7 @@ return {
   { import = "astrocommunity.pack.docker" },
   { import = "astrocommunity.pack.fish" },
   { import = "astrocommunity.pack.go" },
+  --{ import = "astrocommunity.pack.java" },
   { import = "astrocommunity.pack.lua" },
   { import = "astrocommunity.pack.python" },
   { import = "astrocommunity.pack.typescript-all-in-one" },
