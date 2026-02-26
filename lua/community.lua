@@ -7,6 +7,9 @@
 ---@type LazySpec
 return {
   "AstroNvim/astrocommunity",
+  --
+  --{ import = "astrocommunity.ai.opencode-nvim" }, -- need to to install opencode via `npm install -g opencode-ai`
+  --
   { import = "astrocommunity.pack.bash" },
   { import = "astrocommunity.pack.docker" },
   { import = "astrocommunity.pack.fish" },
