@@ -7,6 +7,7 @@ The leader key is Space. AI assistants use
 
 - [Installation](#installation)
 - [Community packs](#community-packs)
+- [Package-info](#package-info)
 - [Sidekick](#sidekick)
 - [Maintenance](#maintenance)
 - [Configuration](#configuration)
@@ -200,17 +201,8 @@ Deno for Deno projects. The pack includes the JavaScript debug adapter,
 `nvim-vtsls`, `tsc.nvim`, and `package-info.nvim`.
 
 Use `gs` to jump to a TypeScript source definition and `:TSC` to run the project's
-TypeScript compiler. In `package.json`, this config provides dependency commands:
-
-| Key | Action |
-| --- | --- |
-| `Space ms` | Show dependency versions |
-| `Space mc` | Hide dependency versions |
-| `Space mt` | Toggle dependency versions |
-| `Space mu` | Update the dependency under the cursor |
-| `Space md` | Delete the dependency under the cursor |
-| `Space mi` | Install a dependency |
-| `Space mp` | Choose a dependency version |
+TypeScript compiler. See [Package-info](#package-info) for dependency commands
+in `package.json`.
 
 ### Vue
 
@@ -241,6 +233,41 @@ Imported through TypeScript/Deno as `astrocommunity.pack.json`.
 
 Adds the JSON parser, `jsonls`, and SchemaStore schemas. JSON validation is
 enabled, including schema-based checks for recognized configuration files.
+
+## Package-info
+
+[package-info.nvim](https://github.com/vuki656/package-info.nvim) displays the
+latest dependency versions in `package.json` and runs package manager commands
+from the editor. The shared TypeScript pack, imported by both TypeScript/Deno
+and Vue, supplies the plugin, its Nui dependency, and default setup.
+
+The shortcuts and which-key group live in
+[lua/plugins/package-info.lua](lua/plugins/package-info.lua). The plugin loads
+when you open an existing `package.json` or use one of its shortcuts. Version
+annotations appear automatically with the default `autostart = true` setting.
+Add an `opts` table to the package-info spec in that file to change plugin options.
+
+Install Node.js and npm, plus your project's package manager if different.
+Package-info detects npm, Yarn, pnpm, or Bun from lockfiles and falls back to
+npm. These executables must be on Neovim's `PATH`.
+
+Use these normal-mode shortcuts in a saved, valid `package.json`. For update,
+delete, and version selection, place the cursor on the dependency's line.
+Those actions and installation run the package manager and can change
+`package.json`, the lockfile, and installed dependencies.
+
+| Key | Action |
+| --- | --- |
+| `Space ms` | Show dependency versions |
+| `Space mc` | Hide dependency versions |
+| `Space mt` | Toggle dependency versions |
+| `Space mu` | Update the dependency under the cursor |
+| `Space md` | Delete the dependency under the cursor |
+| `Space mi` | Install a dependency |
+| `Space mp` | Choose a dependency version |
+
+Run `:Lazy` to inspect `package-info.nvim` if annotations do not appear.
+Reopen `package.json` after saving it if you created the file in a new buffer.
 
 ## Sidekick
 
@@ -333,7 +360,8 @@ so its updated plugin snapshot takes effect.
 
 `lua/community.lua` imports language packs before the specs in `lua/plugins/`.
 Sidekick's options, shortcuts, and Snacks integration live in
-`lua/plugins/sidekick.lua`.
+`lua/plugins/sidekick.lua`. Package-info's shortcuts and which-key group live in
+`lua/plugins/package-info.lua`, with setup inherited from the TypeScript pack.
 
 Files beginning with `if true then return {} end` are inactive template examples.
 Remove that guard only when you intend to enable the file. The language packs
