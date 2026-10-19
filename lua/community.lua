@@ -7,9 +7,7 @@
 ---@type LazySpec
 return {
   "AstroNvim/astrocommunity",
-  --
-  --{ import = "astrocommunity.ai.opencode-nvim" }, -- need to to install opencode via `npm install -g opencode-ai`
-  --
+  -- AI CLI integration is configured in plugins/sidekick.lua.
   { import = "astrocommunity.pack.bash" },
   { import = "astrocommunity.pack.docker" },
   { import = "astrocommunity.pack.fish" },
