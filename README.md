@@ -3,11 +3,13 @@
 Personal [AstroNvim v6](https://github.com/AstroNvim/AstroNvim) configuration with
 language packs for Bash, Docker, Fish, Go, Lua, Python, TypeScript, and Vue.
 The leader key is Space. AI assistants use
-[Sidekick](https://github.com/folke/sidekick.nvim).
+[Sidekick](https://github.com/folke/sidekick.nvim), and Markdown buffers render
+with [render-markdown.nvim](https://github.com/MeanderingProgrammer/render-markdown.nvim).
 
 - [Installation](#installation)
 - [Community packs](#community-packs)
 - [Package-info](#package-info)
+- [Render-markdown](#render-markdown)
 - [Sidekick](#sidekick)
 - [Maintenance](#maintenance)
 - [Configuration](#configuration)
@@ -269,6 +271,37 @@ Those actions and installation run the package manager and can change
 Run `:Lazy` to inspect `package-info.nvim` if annotations do not appear.
 Reopen `package.json` after saving it if you created the file in a new buffer.
 
+## Render-markdown
+
+[render-markdown.nvim](https://github.com/MeanderingProgrammer/render-markdown.nvim)
+draws headings, lists, checkboxes, tables, code blocks, callouts, and wikilinks
+in Markdown buffers. It loads when you open a Markdown file. Rendering applies
+in normal and command mode. Insert mode shows the raw Markdown, and the cursor
+line stays raw in every mode so you can edit it.
+
+[lua/community.lua](lua/community.lua) imports the AstroCommunity spec
+`astrocommunity.markdown-and-latex.render-markdown-nvim`, which installs the
+`html`, `markdown`, and `markdown_inline` parsers.
+[lua/plugins/render-markdown.lua](lua/plugins/render-markdown.lua) adds:
+
+- The `yaml` parser, for rendering frontmatter.
+- The plugin's in-process language server, which completes through blink.cmp.
+  On the first line of a block quote it offers callouts such as `[!NOTE]`,
+  and after a list marker it offers checkboxes.
+- Word wrapping with `linebreak` in Markdown buffers. Other filetypes keep the
+  global `wrap = false`.
+
+Icons need a Nerd Font. LaTeX blocks are not rendered, because that needs the
+`latex` parser and an external converter such as `utftex` or `latex2text`.
+
+| Command | Action |
+| --- | --- |
+| `:RenderMarkdown toggle` | Turn rendering on or off in all buffers |
+| `:RenderMarkdown buf_toggle` | Turn rendering on or off in the current buffer |
+| `:RenderMarkdown preview` | Show a rendered copy of the buffer in a side window |
+
+Run `:checkhealth render-markdown` if a buffer does not render.
+
 ## Sidekick
 
 Sidekick requires Neovim 0.11.2 or newer. Install and authenticate at least one
@@ -358,10 +391,13 @@ so its updated plugin snapshot takes effect.
 
 ## Configuration
 
-`lua/community.lua` imports language packs before the specs in `lua/plugins/`.
+`lua/community.lua` imports language packs and the render-markdown spec before
+the specs in `lua/plugins/`.
 Sidekick's options, shortcuts, and Snacks integration live in
 `lua/plugins/sidekick.lua`. Package-info's shortcuts and which-key group live in
 `lua/plugins/package-info.lua`, with setup inherited from the TypeScript pack.
+Render-markdown's options and the Markdown wrap autocommand live in
+`lua/plugins/render-markdown.lua`.
 
 Files beginning with `if true then return {} end` are inactive template examples.
 Remove that guard only when you intend to enable the file. The language packs
